@@ -4,8 +4,10 @@ use app\App;
 use app\models\Beast;
 use app\models\Hero;
 use app\models\Round;
-$curentHero = json_decode($round->hero_stats, true);
-$curentBeast = json_decode($round->beast_stats, true);
+if ($game->end == 0) {
+    $curentHero = json_decode($round->hero_stats, true);
+    $curentBeast = json_decode($round->beast_stats, true);
+}
 
 ?>
 
@@ -27,6 +29,7 @@ $curentBeast = json_decode($round->beast_stats, true);
         </a>
         <?php } ?>
         <hr/>
+        <?php if ($game->end == 0) { ?>
             <p>Runda currenta</p>
             <ul>
                 <li>
@@ -50,6 +53,7 @@ $curentBeast = json_decode($round->beast_stats, true);
                     <?= 'Viata: ' . $curentBeast['health'] ?>
                 </li>
             </ul>
+        <?php } ?>
         <hr/>
         <table>
             <thead>

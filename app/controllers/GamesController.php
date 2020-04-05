@@ -32,6 +32,7 @@ class GamesController extends BaseController
             $rounds = $game->getRounds();
             if (!$game->isEnded()) {
                 $round = Round::newRound($game, $rounds);
+                print_r('aici');
             } else {
                 $hero = json_decode($game->rounds[sizeof($game->rounds) - 1]->hero_stats, true);
                 $game->isNewRecord = false;

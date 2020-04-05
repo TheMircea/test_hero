@@ -52,7 +52,7 @@ class Game extends BaseModel
         if ($this->isNewRecord) {
             $sql = 'INSERT INTO `' . static::tableName() . '` (`id`, `token`, `hero_id`, `beast_id`, `winner`, `end`, `no_rounds`) VALUES (NULL, :tk, :h_id, :b_id, :win, :e, :nr)';
         } else {
-            $sql = 'UPDATE `' . static::tableName() . '` SET `token` = ::tk, `hero_id` = :h_id, `beast_id` = :b_id, `winner` = :win, `end` = :e, `no_rounds` = :nr WHERE `id` = :id';
+            $sql = 'UPDATE `' . static::tableName() . '` SET `token` = :tk, `hero_id` = :h_id, `beast_id` = :b_id, `winner` = :win, `end` = :e, `no_rounds` = :nr WHERE `id` = :id';
         }
         try {
             $query = $this->db->prepare($sql);
