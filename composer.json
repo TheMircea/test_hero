@@ -1,0 +1,22 @@
+{
+    "name": "mircea/emag",
+    "description": "Proiect Dobrin Mircea, pentru interviul AntiSpider Emag.",
+    "type": "project",
+    "authors": [{
+        "name": "Mircea Dobrin",
+        "email": "dobrin.mircea.i@gmail.com"
+    }],
+    "minimum-stability": "dev",
+    "require": {
+        "vlucas/phpdotenv": "^4.1@dev",
+        "codeception/codeception": "4.x-dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    }
+}
