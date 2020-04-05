@@ -81,9 +81,9 @@ class App
 
         $parser = parse_url($app->url);
         // print_r($parser);
-        // if (!in_array($parser['host'], $hosts, true)) {
-        //     throw new Exception('Host not allowed');
-        // }
+        if (!in_array($parser['host'], $hosts, true)) {
+            throw new Exception('Host not allowed');
+        }
 
         $pathArray = explode('/', $parser['path']);
 
@@ -92,7 +92,7 @@ class App
         }
 
         if (empty($pathArray[2])) {
-            $pathArray[2] = 'users';
+            $pathArray[2] = 'games';
         }
 
         $controllerPath = 'app\\controllers\\' . ucfirst($pathArray[2]) . 'Controller';
