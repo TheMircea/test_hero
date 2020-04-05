@@ -3,11 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2020 at 09:36 PM
+-- Generation Time: Apr 05, 2020 at 04:05 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -20,121 +19,149 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `interviu_emag`
+-- Database: `emag_heroes`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `author`
+-- Table structure for table `beast`
 --
 
-CREATE TABLE `author` (
+CREATE TABLE `beast` (
   `id` int(11) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `phone` varchar(10) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `birthday` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `author_book`
---
-
-CREATE TABLE `author_book` (
-  `id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `book_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `book`
---
-
-CREATE TABLE `book` (
-  `id` int(11) NOT NULL,
-  `book_type_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `summary` varchar(255) NOT NULL,
-  `page_no` int(11) NOT NULL,
-  `publication_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `book_type`
---
-
-CREATE TABLE `book_type` (
-  `id` int(11) NOT NULL,
-  `type_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Truncate table before insert `book_type`
---
-
-TRUNCATE TABLE `book_type`;
---
--- Dumping data for table `book_type`
---
-
-INSERT INTO `book_type` (`id`, `type_name`) VALUES
-(1, 'default');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `token` varchar(50) NOT NULL
+  `health` int(11) NOT NULL,
+  `strength` int(11) NOT NULL,
+  `defence` int(11) NOT NULL,
+  `speed` int(11) NOT NULL,
+  `luck` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `game`
+--
+
+CREATE TABLE `game` (
+  `id` int(11) NOT NULL,
+  `token` varchar(10) NOT NULL,
+  `hero_id` int(11) NOT NULL,
+  `beast_id` int(11) NOT NULL,
+  `winner` varchar(10) NOT NULL,
+  `end` tinyint(1) NOT NULL DEFAULT 0,
+  `no_rounds` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hero`
+--
+
+CREATE TABLE `hero` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `health` int(11) NOT NULL,
+  `strength` int(11) NOT NULL,
+  `defence` int(11) NOT NULL,
+  `speed` int(11) NOT NULL,
+  `luck` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hero_skill`
+--
+
+CREATE TABLE `hero_skill` (
+  `id` int(11) NOT NULL,
+  `hero_id` int(11) NOT NULL,
+  `skill_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `round`
+--
+
+CREATE TABLE `round` (
+  `id` int(11) NOT NULL,
+  `game_id` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
+  `hero_stats` varchar(255) NOT NULL,
+  `beast_stats` varchar(255) NOT NULL,
+  `used_skills` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skill`
+--
+
+CREATE TABLE `skill` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `attribute` varchar(50) NOT NULL,
+  `effect` int(11) NOT NULL,
+  `chance` int(11) NOT NULL,
+  `active_on` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Truncate table before insert `skill`
+--
+
+TRUNCATE TABLE `skill`;
+--
+-- Dumping data for table `skill`
+--
+
+INSERT INTO `skill` (`id`, `name`, `attribute`, `effect`, `chance`, `active_on`) VALUES
+(1, 'Magic shield', 'defence', 2, 20, 0),
+(2, 'Rapid strike', 'attac_round', 2, 10, 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `author`
+-- Indexes for table `beast`
 --
-ALTER TABLE `author`
+ALTER TABLE `beast`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `author_book`
+-- Indexes for table `game`
 --
-ALTER TABLE `author_book`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `author_id` (`author_id`),
-  ADD KEY `book_id` (`book_id`);
-
---
--- Indexes for table `book`
---
-ALTER TABLE `book`
+ALTER TABLE `game`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `book_type`
+-- Indexes for table `hero`
 --
-ALTER TABLE `book_type`
+ALTER TABLE `hero`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Indexes for table `hero_skill`
 --
-ALTER TABLE `user`
+ALTER TABLE `hero_skill`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `round`
+--
+ALTER TABLE `round`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `skill`
+--
+ALTER TABLE `skill`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -142,46 +169,40 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `author`
+-- AUTO_INCREMENT for table `beast`
 --
-ALTER TABLE `author`
+ALTER TABLE `beast`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `author_book`
+-- AUTO_INCREMENT for table `game`
 --
-ALTER TABLE `author_book`
+ALTER TABLE `game`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `book`
+-- AUTO_INCREMENT for table `hero`
 --
-ALTER TABLE `book`
+ALTER TABLE `hero`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `book_type`
+-- AUTO_INCREMENT for table `hero_skill`
 --
-ALTER TABLE `book_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
+ALTER TABLE `hero_skill`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for table `round`
 --
+ALTER TABLE `round`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for table `author_book`
+-- AUTO_INCREMENT for table `skill`
 --
-ALTER TABLE `author_book`
-  ADD CONSTRAINT `author_book_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `author` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `author_book_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-SET FOREIGN_KEY_CHECKS=1;
+ALTER TABLE `skill`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
